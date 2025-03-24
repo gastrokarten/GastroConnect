@@ -3,78 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digitale Speisekarten per QR-Code</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>GastroConnect - Digitale Speisekarten per QR-Code</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f4f8;
-            color: #333;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
         header {
-            background-color: #2c3e50;
-            color: #ffffff;
+            background: linear-gradient(135deg, #2c3e50, #4a627c);
+            color: white;
             text-align: center;
-            padding: 20px 0;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
         }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: 1;
+        }
+
         .company-name {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 5px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
         }
-        .about, .benefits, .contact, .motivation, .pricing {
-            max-width: 800px;
-            margin: 40px auto;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        header h1 {
+            font-size: 1.8rem;
+            margin: 10px 0;
+            position: relative;
+            z-index: 2;
         }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
         h2 {
             color: #2980b9;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
         }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: #2980b9;
+        }
+
+        .about, .motivation, .benefits, .pricing, .contact {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .about:hover, .motivation:hover, .benefits:hover, .pricing:hover, .contact:hover {
+            transform: translateY(-5px);
+        }
+
         ul {
-            list-style-type: none;
-            padding: 0;
+            list-style: none;
         }
-        li {
-            background: #ecf0f1;
-            margin: 10px 0;
-            padding: 10px;
-            border-left: 5px solid #2980b9;
+
+        .benefits li, .pricing li {
+            background: #f8fafc;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
         }
+
+        .benefits li:hover, .pricing li:hover {
+            background: #e6f0fa;
+        }
+
+        .benefits li::before {
+            content: '✓';
+            color: #2980b9;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
         .cta {
             display: inline-block;
             background: #2980b9;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 30px;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s ease;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
             cursor: pointer;
         }
+
         .cta:hover {
             background: #1c6ea4;
+            transform: scale(1.05);
         }
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 40px;
-        }
+
         .contact-info {
             display: none;
             margin-top: 20px;
-            padding: 15px;
-            background: #ecf0f1;
+            padding: 20px;
+            background: #f8fafc;
             border-radius: 10px;
             text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .company-name { font-size: 2rem; }
+            header h1 { font-size: 1.5rem; }
+            section { margin: 30px auto; padding: 0 15px; }
+            h2 { font-size: 1.6rem; }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <script>
         function showContactInfo() {
             document.getElementById('contact-info').style.display = 'block';
@@ -87,56 +183,54 @@
         <h1>Digitale Speisekarten – Modern, Hygienisch, Effizient</h1>
         <p>Ersetzen Sie gedruckte Speisekarten durch innovative QR-Code Lösungen!</p>
     </header>
-    
+
     <section class="about">
         <h2>Unser Service</h2>
-        <p>Wir digitalisieren Ihre Speisekarte. Durch die Erstellung eines individuellen QR-Codes verbinden wir Ihre Speisekarte mit Ihren Gästen. Auf Wunsch erhalten Sie einen personalisierten QR-Code im Look Ihres Unternehmens. Bei Anpassungen sorgen wir für Aktualisierungen in Echtzeit.</p>
+        <p>Wir digitalisieren Ihre Speisekarte. Mit einem individuellen QR-Code verbinden wir Ihre Gäste direkt mit Ihrem Angebot. Optional gestalten wir Ihren QR-Code im Look Ihres Unternehmens. Änderungen? Kein Problem – wir aktualisieren Ihre Speisekarte in Echtzeit.</p>
     </section>
-    
+
     <section class="motivation">
         <h2>Unsere Motivation</h2>
-        <p>Die Idee für GastroConnect entstand aus persönlicher Erfahrung. Bereits im Sommer 2016, zu Beginn meiner Ausbildung, wurde mir bewusst, wie aufwendig es ist, traditionelle Speisekarten zu pflegen, zu aktualisieren und stets in ausreichender Menge bereitzuhalten. Besonders im Terrassengeschäft während der Sommermonate oder bei außerplanmäßigen Veranstaltungen stellte dies oft eine Herausforderung dar.</p>
-        <p>Im Laufe der Jahre und durch die zahlreichen Erfahrungen, die ich sammeln durfte, begegnete mir dieses Problem immer wieder: Es gibt zu wenige Speisekarten, Preise müssen ständig angepasst werden, alte Karten müssen eingesammelt und neue verteilt werden. Hinzu kommt, dass Speisekarten im Außenbereich schnell nass werden oder einfach unhandlich sind, was für das Personal zusätzliche Laufwege und eine enorme Belastung bedeutet.</p>
-        <p>Mit GastroConnect habe ich eine Lösung geschaffen, die all diese Probleme beseitigt. Durch die Digitalisierung der Speisekarten mit QR-Codes ermöglichen wir eine moderne, effiziente und nachhaltige Alternative, die sowohl für Gastronomen als auch für Gäste zahlreiche Vorteile bietet.</p>
+        <p>Die Idee zu GastroConnect entstand 2016 während meiner Ausbildung. Damals fiel mir auf, wie mühsam die Pflege traditioneller Speisekarten ist – ständige Updates, fehlende Exemplare und hoher Aufwand für das Personal, besonders im Sommer oder bei Events.</p>
+        <p>Jahre später erkannte ich: Dieses Problem ist allgegenwärtig. Speisekarten gehen verloren, werden nass oder sind unpraktisch. Mit GastroConnect bieten wir eine digitale Lösung, die Zeit spart, nachhaltig ist und Gästen wie Gastronomen das Leben erleichtert.</p>
     </section>
-    
+
     <section class="benefits">
         <h2>Vorteile der digitalen Speisekarte</h2>
         <ul>
-            <li><strong>Kosteneinsparung:</strong> Keine Druckkosten, keine Papierabfälle</li>
+            <li><strong>Kosteneinsparung:</strong> Keine Druckkosten, kein Papierabfall</li>
             <li><strong>Hygiene:</strong> Kontaktlose Nutzung für mehr Sicherheit</li>
-            <li><strong>Flexibilität:</strong> Speisekarten in Echtzeit aktualisieren</li>
-            <li><strong>Effizienz:</strong> Entlastung des Personals</li>
-            <li><strong>Moderne Optik:</strong> Innovatives und stilvolles Restaurantambiente</li>
-            <li><strong>Umweltfreundlich:</strong> Nachhaltige Lösung ohne Papierverbrauch</li>
-            <li><strong>Kundenzufriedenheit:</strong> Mehrsprachige Speisekarten für internationale Gäste</li>
+            <li><strong>Flexibilität:</strong> Echtzeit-Updates Ihrer Speisekarte</li>
+            <li><strong>Effizienz:</strong> Weniger Arbeit für Ihr Personal</li>
+            <li><strong>Modernität:</strong> Stilvolles und innovatives Ambiente</li>
+            <li><strong>Nachhaltigkeit:</strong> Umweltfreundlich ohne Papier</li>
+            <li><strong>Kundenzufriedenheit:</strong> Mehrsprachigkeit für internationale Gäste</li>
         </ul>
     </section>
-    
+
     <section class="pricing">
         <h2>Unsere Pakete</h2>
         <ul>
-            <li><strong>Basic Paket:</strong> Individueller QR-Code als druckfertige Datei (PDF & JPG) – <strong>19,99€</strong></li>
-            <li><strong>Standard Paket:</strong> Individueller QR-Code als druckfertige Datei (PDF & JPG) + 40 QR-Code Sticker – <strong>34,99€</strong></li>
-            <li><strong>Premium Paket:</strong> Individueller QR-Code im Firmenlook (Firmenfarben & Logo) + 40 QR-Code Sticker – <strong>59,99€</strong></li>
-            <li><strong>Service Paket:</strong> Aktualisierung der Speisekarte bei Änderungen – <strong>10,99€</strong></li>
-            <li><strong>Sticker Paket:</strong> 40 zusätzliche QR-Code Sticker – <strong>16,99€</strong></li>
+            <li><strong>Basic:</strong> QR-Code als PDF & JPG – <strong>19,99€</strong></li>
+            <li><strong>Standard:</strong> QR-Code (PDF & JPG) + 40 Sticker – <strong>34,99€</strong></li>
+            <li><strong>Premium:</strong> QR-Code im Firmenlook + 40 Sticker – <strong>59,99€</strong></li>
+            <li><strong>Service:</strong> Speisekarten-Updates – <strong>10,99€</strong></li>
+            <li><strong>Sticker:</strong> 40 zusätzliche Sticker – <strong>16,99€</strong></li>
         </ul>
     </section>
-    
+
     <section class="contact">
         <h2>Interesse geweckt?</h2>
-        <p>Kontaktieren Sie uns noch heute und bringen Sie Ihr Restaurant auf das nächste Level!</p>
+        <p>Bringen Sie Ihr Restaurant auf das nächste Level – kontaktieren Sie uns!</p>
         <button class="cta" onclick="showContactInfo()">Jetzt Kontakt aufnehmen</button>
         <div id="contact-info" class="contact-info">
-            <p><strong>Telefon:</strong> 015237824011</p>
+            <p><strong>Telefon:</strong> 0152 37824011</p>
             <p><strong>E-Mail:</strong> <a href="mailto:gastroconnect.menu@gmail.com">gastroconnect.menu@gmail.com</a></p>
         </div>
     </section>
-    
+
     <footer>
-        <p>&copy; 2025 Digitale Speisekarten | Alle Rechte vorbehalten</p>
+        <p>© 2025 GastroConnect | Alle Rechte vorbehalten</p>
     </footer>
 </body>
 </html>
-
